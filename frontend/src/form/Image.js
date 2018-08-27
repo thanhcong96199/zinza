@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Select } from 'antd';
 import * as Constants from '../constants/var'
 import axios from 'axios';
-import MySearch from './../components/Search'
 
 import { connect } from 'react-redux'
 import Input from './../components/Input'
@@ -137,11 +136,8 @@ class ImageForm extends Component {
       (res) => {
         let data = res.data
         let arrs = []
-        data.forEach(item => {
-          arrs.push({value: item.image_name, label: item.image_name})
-        });
         this.setState({
-          images: arrs
+          images: data
         })
       },
       (error) => { Constants.mess.show('error', 'Lỗi'); }
