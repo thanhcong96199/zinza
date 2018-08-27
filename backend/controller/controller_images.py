@@ -42,11 +42,29 @@ def create_image(request):
     params = request.get_json()
     image_name = params['image_name']
     igroup = params['igroup']
-    if (image_name is None) or (igroup is None):
+
+    if image_name == '':
         return json.dumps({'result': False, 'mess':"Write information"})
     else:
-        result = Images.create_image(image_name, igroup)
-        return json.dumps(result)
+
+
+        result = Images.get_information_image(image_name)
+        if result >= 1:
+            return json.dumps({'result': False, 'mess': 'Da ton tai'})
+
+        else:
+            result = DockerService.pull_image()
+
+
+        return json.dumps({'result': True})
+        if result == 0:
+            result = Images.create_image(image_name, igroup)
+            return json.dumps({'result': True})
+        else:
+            return json.dumps({'result': False})
+
+
+
 
 
 # ================== delete images =============
@@ -64,3 +82,4 @@ def edit_image(request):
     igroup = params['igroup']
     result = Images.edit_image(image_id, image_name, igroup)
     return json.dumps({'result': True}) if result else json.dumps({'result': False})
+

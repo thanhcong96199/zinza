@@ -41,13 +41,13 @@ class DockerService:
     def check_size_image(image_name):
         """return size image"""
         img = DockerService.pull(image_name)
-        print(img)
+
         id_image = img.short_id.split(':')[1]
-        print(id_image)
+
         temp = client.images.get(id_image)
-        print(temp)
+
         results = temp.attrs["Size"]
-        print(results)
+
         return round(results/(1024*1024*1024), 3)
 
     @staticmethod
