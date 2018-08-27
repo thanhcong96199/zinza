@@ -12,7 +12,9 @@ export const userDeleteRoute = domain + '/users/delete'
 
 export const containersRoute = domain + '/containers'
 export const containersCreateRoute = domain + '/containers/create'
-export const containersDetailRoute = domain + '/containers/detail'
+export const containersDetailRoute = domain + '/containers/info'
+export const containersUpdateRoute = domain + '/containers/update'
+export const containersDeleteRoute = domain + '/containers/delete'
 
 export const imagesRoute = domain + '/images'
 export const imagesCreateRoute = domain + '/images/create'

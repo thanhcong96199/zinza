@@ -19,22 +19,33 @@ function mapDispatchToProps(dispatch: Function): Object {
   }
 }
 
-class ImageForm extends Component {
+class ContainerForm extends Component {
 
   state = {
-    image_id: '',
+    container_id: '',
+    container_docker_id: '',
+    cpu: '',
+    memory: '',
+    port: '',
+    container_password: '',
     image_name: '',
-    isize: '',
-    igroup: '',
-    images: []
+    images: [],
+    user_id: '',
+    users: []
   }
 
   reset = () => {
       const state = {
-        image_id: '',
+        container_id: '',
+        container_docker_id: '',
+        cpu: '',
+        memory: '',
+        port: '',
+        container_password: '',
         image_name: '',
-        isize: '',
-        igroup: ''
+        images: [],
+        user_id: '',
+        users: []
       }
       this.setState({...state})
   }
@@ -58,14 +69,14 @@ class ImageForm extends Component {
 
   onCreate = () => {
     let history = createHistory()
-    axios.post(Constants.imagesCreateRoute, this.state)
+    axios.post(Constants.containersCreateRoute, this.state)
     .then(
         (res) => {
           let result = res.data.result
           if (result) {
             Constants.mess.show();
             this.reset();
-            history.push('/images')
+            history.push('/containers')
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
@@ -76,14 +87,14 @@ class ImageForm extends Component {
 
   onUpdate = () => {
     let history = createHistory()
-    axios.post(Constants.imagesUpdateRoute, this.state)
+    axios.post(Constants.containersUpdateRoute, this.state)
     .then(
         (res) => {
           let result = res.data.result
           if (result) {
             Constants.mess.show();
             this.reset();
-            history.push('/images')
+            history.push('/containers')
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
@@ -94,13 +105,13 @@ class ImageForm extends Component {
 
   handleDel = () => {
     let history = createHistory()
-    axios.post(Constants.imagesDeleteRoute, this.state)
+    axios.post(Constants.containersDeleteRoute, this.state)
     .then(
         (res) => {
           let result = res.data.result
           if (result) {
             Constants.mess.show('success', 'Xóa thành công');
-            history.push('/users')
+            history.push('/containers')
           } else {
             Constants.mess.show('error', 'Xóa thất bại');
           }
@@ -113,8 +124,8 @@ class ImageForm extends Component {
     const { typeForm } = this.props
     if (typeForm === 'edit' || typeForm === 'detail') {
       // get current image info
-      const image_id = Number(this.props.match.params.id)
-      axios.post(Constants.imagesDetailRoute, {image_id: image_id})
+      const container_id = Number(this.props.match.params.id)
+      axios.post(Constants.containersDetailRoute, {container_id: container_id})
       .then(
           (res) => {
             let data = res.data
@@ -137,10 +148,22 @@ class ImageForm extends Component {
       },
       (error) => { Constants.mess.show('error', 'Lỗi'); }
     );
+
+    // get list users
+    axios.post(Constants.usersRoute, {})
+    .then(
+      (res) => {
+        let data = res.data
+        this.setState({
+          users: data
+        })
+      },
+      (error) => { Constants.mess.show('error', 'Lỗi'); }
+    );
   }
 
   render() {
-    const { image_name, isize, igroup, image_id, images } = this.state
+    const { container_id, container_docker_id, cpu, memory, port, container_password, image_name, images, user_id, users } = this.state
     const { typeForm } = this.props
 
     return (
@@ -152,17 +175,22 @@ class ImageForm extends Component {
 
           <div className="col col-6">
             {
-              typeForm === 'create' ?
-              <Input isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/> :
-              <Input disabled={true} onChangeValue={this.onChangeValue} value={image_name} kind="input" classList="mr-t-10" label="Image name" placeholder="" name="image_name" type="text" iconName="key"/>
+              typeForm !== 'create' &&
+              <span>
+                <Input disabled={true} onChangeValue={this.onChangeValue} value={container_id} kind="input" classList="mr-t-10" label="Container ID" placeholder="" name="container_id" type="text" iconName="key"/>
+                <Input disabled={true} onChangeValue={this.onChangeValue} value={container_docker_id} kind="input" classList="mr-t-10" label="Container docker ID" placeholder="" name="container_docker_id" type="text" iconName="key"/>
+              </span>
             }
+            <Input onChangeValue={this.onChangeValue} value={cpu} kind="input" classList="mr-t-10" label="CPU" placeholder="" name="cpu" type="text" iconName="key"/>
+            <Input onChangeValue={this.onChangeValue} value={memory} kind="input" classList="mr-t-10" label="Memory" placeholder="" name="memory" type="text" iconName="key"/>
           </div>
           <div className="col col-6">
-            {
-              (typeForm === 'edit' || typeForm === 'detail') &&
-              <Input disabled={true} onChangeValue={this.onChangeValue} value={isize} kind="input" classList="mr-t-10" label="Size" placeholder="" name="isize" type="text" iconName="key"/>
-            }
-            <Input onChangeValue={this.onChangeValue} value={igroup} kind="input" classList="mr-t-10" label="Group" placeholder="" name="igroup" type="text" iconName="user"/>
+            <Input onChangeValue={this.onChangeValue} value={port} kind="input" classList="mr-t-10" label="Port" placeholder="" name="port" type="number" iconName="key"/>
+            <Input onChangeValue={this.onChangeValue} value={container_password} kind="input" classList="mr-t-10" label="Password" placeholder="" name="container_password" type="text" iconName="key"/>
+
+            <Input isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
+
+            <Input isUsersSelect={true} onChangeValue={this.onChangeValue} defaultValue={user_id} selects={users} kind="select" classList="mr-t-10" label="User" placeholder="" name="user_id"/>
           </div>
         </div>
 
@@ -193,4 +221,4 @@ class ImageForm extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ContainerForm)
