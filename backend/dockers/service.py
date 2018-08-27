@@ -29,7 +29,7 @@ class DockerService:
         try:
             env = ['PASSWORD = {}'.format(password)]
             ports = {'5900/tcp': port}
-            run_container = client.containers.run('{}:latest'.format(image_name), --cpu = cpu, mem_limit = memory, environment = env, ports = ports, detach = True)
+            run_container = client.containers.run('{}:latest'.format(image_name), cpu_count = cpu, mem_limit = memory, environment = env, ports = ports, detach = True)
             if run_container.status == 'created':
                 return True
 
