@@ -124,20 +124,20 @@ class ImageForm extends Component {
           },
           (error) => { Constants.mess.show('error', 'Lỗi'); }
       );
-
-      // get list images
-      axios.post(Constants.imagesRoute, {})
-      .then(
-        (res) => {
-          let data = res.data
-          console.log('images data:', {res_data: res.data, res: res})
-          this.setState({
-            images: data
-          })
-        },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
-      );
     }
+
+    // get list images
+    axios.post(Constants.imagesRoute, {})
+    .then(
+      (res) => {
+        let data = res.data
+        console.log('images data:', {res_data: res.data, res: res})
+        this.setState({
+          images: data
+        })
+      },
+      (error) => { Constants.mess.show('error', 'Lỗi'); }
+    );
   }
 
   render() {
