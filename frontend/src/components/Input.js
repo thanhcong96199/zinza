@@ -24,10 +24,6 @@ class MyInput extends Component {
     let _isUserSelects = typeof(disabled) === 'undefined' ? false : isUserSelects
     let _isImagesSelect = typeof(disabled) === 'undefined' ? false : isImagesSelect
 
-    if(kind === 'select') {
-      console.log('defaultValue:', defaultValue)
-    }
-
     return (
       <div className={classList}>
         <label>{label}</label>

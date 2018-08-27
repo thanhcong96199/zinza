@@ -104,7 +104,7 @@ class ImageForm extends Component {
           let result = res.data.result
           if (result) {
             Constants.mess.show('success', 'Xóa thành công');
-            history.push('/users')
+            history.push('/images')
           } else {
             Constants.mess.show('error', 'Xóa thất bại');
           }
@@ -135,7 +135,6 @@ class ImageForm extends Component {
     .then(
       (res) => {
         let data = res.data
-        let arrs = []
         this.setState({
           images: data
         })
@@ -148,6 +147,7 @@ class ImageForm extends Component {
     const { image_name, isize, igroup, image_id, images } = this.state
     const { typeForm } = this.props
 
+    console.log("============images:", images )
 
     return (
       <div>
