@@ -1,6 +1,7 @@
 #from dockers.service import  DockerService
 from model.containers import Containers
-
+import json
+# ========= create container =============
 def create_container(request):
 	params = request.get_json()
 	user_id = params['user_id']
@@ -9,18 +10,45 @@ def create_container(request):
 	memory = params['memory']
 	port = params['port']
 	container_password = params['container_password']
-	pass
+
+	if (cpu is not None) and (memory is not None) and (port is not None) and (container_password is not None) and (image is not None) and ():
+		result = Containers.create_container(image, cpu, memory, port, container_password, user_id)
+		return json.dumps(result)
 
 
+	else:
+		return json.dumps({'result': False, 'mess': 'Write Information'})
 
+
+# =========== show all container ==============
 def show_all_container(request):
-	pass
+	result = Containers.get_all_container()
+	return json.dumps(result)
+
 
 def show_container_detail(request):
-	pass
+	params = request.get_json()
+	container_id = params['container_id']
+	result = Containers.get_container(container_id)
+	return json.dumps(result)
 
 def update_container(request):
-	pass
+
+	params = request.get_json()
+	container_id = params['container_id']
+	cpu = params['cpu']
+	memory = params['memory']
+
+	port = params['port']
+	container_password = params['container_password']
+	result = Containers.edit_container( cpu, memory, port, container_password, container_id)
+
+	return json.dumps({'result': True}) if result else json.dumps({'result': False})
+
 
 def delete_container(request):
-	pass
+	params = request.get_json()
+	container_id = params['container_id']
+	result = Containers.del_container(container_id)
+
+	return json.dumps({'result': True}) if result else json.dumps({'result': False})

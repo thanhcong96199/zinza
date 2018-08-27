@@ -102,3 +102,13 @@ class Images:
             print(e)
             return False
         return True
+
+    @staticmethod
+    # === get image
+    def get_information_image(image_name):
+
+        driver = DatabaseDriver()
+        args = [image_name]
+        result = driver.exec_command(""" select count(*) from images where image_name= ? """, args)
+        return  result
+
