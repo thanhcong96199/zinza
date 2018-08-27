@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import User from './../form/User'
+import ImageForm from './../form/Image'
 
 
 function mapStateToProps(state: Object): Object {
@@ -16,7 +16,7 @@ function mapDispatchToProps(dispatch: Function): Object {
   }
 }
 
-class UserCreate extends Component {
+class ImageDetail extends Component {
   render() {
     const { userRedux } = this.props
     // if (!userRedux.loged) {
@@ -25,10 +25,10 @@ class UserCreate extends Component {
 
     return (
       <div>
-        <User typeForm="create"/>
+        <ImageForm typeForm="detail" { ...this.props }/>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserCreate)
+export default connect(mapStateToProps, mapDispatchToProps)(ImageDetail)
