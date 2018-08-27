@@ -64,7 +64,6 @@ class User extends Component {
             </Link>
           </div>
         </div>
-        
 
         <table className="table table-hover table-bordered">
           <thead>

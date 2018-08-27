@@ -24,8 +24,6 @@ class MyInput extends Component {
     let _isUserSelects = typeof(isUserSelects) === 'undefined' ? false : isUserSelects
     let _isImagesSelect = typeof(isImagesSelect) === 'undefined' ? false : isImagesSelect
 
-    console.log('_______________-selects:(input)', selects)
-
     return (
       <div className={classList}>
         <label>{label}</label>

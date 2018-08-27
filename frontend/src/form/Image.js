@@ -147,8 +147,6 @@ class ImageForm extends Component {
     const { image_name, isize, igroup, image_id, images } = this.state
     const { typeForm } = this.props
 
-    console.log("============images: (form)", images )
-
     return (
       <div>
         <div className="row">

@@ -47,9 +47,9 @@ class Image extends Component {
   render() {
     const { data } = this.state
     const { userRedux } = this.props
-    // if (!userRedux.loged) {
-    //   return <Redirect to="/login"/>
-    // }
+    if (!userRedux.loged) {
+      return <Redirect to="/login"/>
+    }
 
     return (
       <div>

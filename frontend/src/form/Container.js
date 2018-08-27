@@ -96,7 +96,7 @@ class ContainerForm extends Component {
             this.reset();
             history.push('/containers')
           } else {
-            Constants.mess.show('error', 'Lỗi create');
+            Constants.mess.show('error', 'Lỗi update');
           }
         },
         (error) => { Constants.mess.show('error', 'Lỗi'); }
@@ -191,7 +191,7 @@ class ContainerForm extends Component {
             <Input isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
 
             <Input isUsersSelect={true} onChangeValue={this.onChangeValue} defaultValue={user_id} selects={users} kind="select" classList="mr-t-10" label="User" placeholder="" name="user_id"/>
-          </div>                                                                                                                                                                                                                                                                                              
+          </div>
         </div>
 
         <div className="row">
