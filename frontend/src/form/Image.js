@@ -155,7 +155,7 @@ class ImageForm extends Component {
           </div>
 
           <div className="col col-6">
-            <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
+            <Input disabled={typeForm !== 'create'} isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
           </div>
           <div className="col col-6">
             {
