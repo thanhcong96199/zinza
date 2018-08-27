@@ -17,10 +17,12 @@ class MyInput extends Component {
   }
 
   render() {
-    const { placeholder, iconName, name, type, classList, label, kind, value, selects, defaultValue, disabled } = this.props
+    const { placeholder, iconName, name, type, classList, label, kind, value, selects, defaultValue, disabled, isUserSelects, isImagesSelect } = this.props
     const { TextArea } = Input
     const Option = Select.Option
     let _disabled = typeof(disabled) === 'undefined' ? false : disabled
+    let _isUserSelects = typeof(disabled) === 'undefined' ? false : isUserSelects
+    let _isImagesSelect = typeof(disabled) === 'undefined' ? false : isImagesSelect
 
     return (
       <div className={classList}>
@@ -67,7 +69,7 @@ class MyInput extends Component {
             >
               {
                 selects.map((item, key) => {
-                  return <Option key={key} value={item.id}>{item.name}</Option>
+                  return <Option key={key} value={_isImagesSelect ? item.image_name : item.user_id}>{_isImagesSelect ? item.image_name : item.user_name}</Option>
                 })
               }
             </Select>

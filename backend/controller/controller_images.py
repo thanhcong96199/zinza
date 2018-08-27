@@ -21,10 +21,10 @@ def show_all_images(request):
     return json.dumps(result)
 
 # ============== show one information of iamges
-def get_image(rquest):
+def get_image(request):
     params = request.get_json()
-    id = params['image_id']
-    result = Images.get_image(id)
+    image_id = params['image_id']
+    result = Images.get_image(image_id)
     return json.dumps(result)
 
 # =========== create image ===========
