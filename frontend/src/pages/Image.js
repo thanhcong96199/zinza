@@ -18,19 +18,19 @@ function mapDispatchToProps(dispatch: Function): Object {
   }
 }
 
-class User extends Component {
+class Image extends Component {
   state = {
-    users: [
+    data: [
     ]
   }
 
   componentDidMount() {
-    axios.post(Constants.usersRoute, {})
+    axios.post(Constants.imagesRoute, {})
     .then(
       (res) => {
-        let users = res.data
+        let data = res.data
         this.setState({
-          users: users
+          data: data
         })
       },
       (error) => { this.showMess(false) }
@@ -45,7 +45,7 @@ class User extends Component {
   }
 
   render() {
-    const { users } = this.state
+    const { data } = this.state
     const { userRedux } = this.props
     // if (!userRedux.loged) {
     //   return <Redirect to="/login"/>
@@ -55,12 +55,12 @@ class User extends Component {
       <div>
         <div className="row">
           <div className="col col-6">
-            <h5>Nhân viên</h5>
-            <p>{users.length} Người</p>
+            <h5>Images</h5>
+            <p>{data.length} Images</p>
           </div>
           <div className="col col-6 text-right">
-            <Link to="/users/create">
-              <Button type="primary" icon="plus">Nhân viên</Button>
+            <Link to="/images/create">
+              <Button type="primary" icon="plus">Image</Button>
             </Link>
           </div>
         </div>
@@ -71,26 +71,26 @@ class User extends Component {
             <tr className="text-center">
               <td>ID</td>
               <td>Name</td>
-              <td>Email</td>
-              <td>Chức vụ</td>
+              <td>Size</td>
+              <td>Group</td>
             </tr>
           </thead>
           <tbody>
             {
-              users.map((user, index) => {
+              data.map((item, index) => {
                 return <tr key={index}>
                   <td>
-                    <Link to={"/users/edit/" + user.user_id}>
-                    {user.user_id}
+                    <Link to={"/images/edit/" + item.image_id}>
+                    {item.image_id}
                     </Link>
                   </td>
                   <td>
-                    <Link to={"/users/edit/" + user.user_id}>
-                      {user.user_name}
+                    <Link to={"/images/edit/" + item.image_name}>
+                      {item.image_name}
                     </Link>
                   </td>
-                  <td>{user.mail}</td>
-                  <td>{user.position}</td>
+                  <td>{item.isize}</td>
+                  <td>{item.igroup}</td>
                 </tr>
               })
             }
@@ -102,4 +102,4 @@ class User extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(Image)

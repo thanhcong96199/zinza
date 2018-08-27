@@ -8,6 +8,11 @@ import CheckLogin from './components/CheckLogin';
 import UserCreate from './pages/UserCreate'
 import UserEdit from './pages/UserEdit';
 import UserDetail from './pages/UserEdit';
+
+import Image from './pages/Image';
+import ImageCreate from './pages/ImageCreate'
+import ImageDetail from './pages/ImageDetail';
+import ImageEdit from './pages/ImageEdit';
 // redux
 import { Provider } from 'react-redux'
 import configureStore from './store/config'
@@ -35,6 +40,11 @@ class App extends Component {
                     <Route exact path="/users/create" component={UserCreate} />
                     <Route exact path="/users/edit/:id" component={UserEdit} />
                     <Route exact path="/users/detail/:id" component={UserDetail} />
+
+                    <Route exact path="/images" component={Image} />
+                    <Route exact path="/images/create" component={ImageCreate} />
+                    <Route exact path="/images/detail/:id" component={ImageDetail} />
+                    <Route exact path="/images/edit/:id" component={ImageEdit} />
                   </Switch>
                 </div>
               </div>
