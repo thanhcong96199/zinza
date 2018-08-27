@@ -3,8 +3,6 @@ import { Button } from 'antd';
 import * as Constants from '../constants/var'
 import axios from 'axios';
 
-import { Redirect } from 'react-router-dom'
-
 import { connect } from 'react-redux'
 import Input from './../components/Input'
 
@@ -113,8 +111,6 @@ class User extends Component {
   }
 
   componentDidMount() {
-    let history = createHistory()
-
     const { typeForm } = this.props
     if (typeForm === 'edit') {
       const user_id = Number(this.props.match.params.id)

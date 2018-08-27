@@ -47,9 +47,9 @@ class User extends Component {
   render() {
     const { users } = this.state
     const { userRedux } = this.props
-    // if (!userRedux.loged) {
-    //   return <Redirect to="/login"/>
-    // }
+    if (!userRedux.loged) {
+      return <Redirect to="/login"/>
+    }
 
     return (
       <div>

@@ -39,9 +39,9 @@ class UserDetail extends Component {
 
   render() {
     const { userRedux } = this.props
-    // if (!userRedux.loged) {
-    //   return <Redirect to="/login"/>
-    // }
+    if (!userRedux.loged) {
+      return <Redirect to="/login"/>
+    }
 
     return (
       <div>
