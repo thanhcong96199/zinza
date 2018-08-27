@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build react-scripts build && mv build/static/js/*.js ./../backend/static/js/main.js && mv build/static/css/*.css ./../backend/static/css/main.css",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
