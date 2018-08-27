@@ -57,8 +57,9 @@ def delete_user(request):
 def edit_user(request):
     params = request.get_json()
     user_id = params['user_id']
-    password = params['password']
-    name = params['name']
+    password = params['user_password']
+    name = params['user_name']
     mail = params['mail']
-    result = Users.edit_user(user_id, mail, password, name)
+    position = params['position']
+    result = Users.edit_user(user_id, mail, password, name, position)
     return json.dumps({'result': True}) if result else json.dumps({'result': False})

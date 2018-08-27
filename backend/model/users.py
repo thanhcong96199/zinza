@@ -52,21 +52,22 @@ class Users:
             driver = DatabaseDriver()
             args = [mail, user_password, name, position]
             new_id = driver.exec_command("""insert into users(mail, user_password, user_name, position)
-                                            values (?, ?, ?, ?, ?)""", args)
+                                            values (?, ?, ?, ?)""", args)
             return new_id
         except Exception as e:
             print(e)
             return False
 
     @staticmethod
-    def edit_user(user_id, mail, user_password, user_name):
+    def edit_user(user_id, mail, password, name, position):
         try:
             driver = DatabaseDriver()
-            args = [user_id, mail, user_password, user_name]
+            args = [ mail, password, name, position, user_id]
             driver.exec_command("""update users set 
                                     mail=?, 
                                     user_password=?, 
-                                    user_name=?
+                                    user_name=?,
+                                    position = ?
                                     where user_id=?""", args)
         except Exception as e:
             print(e)
@@ -78,7 +79,7 @@ class Users:
         try:
             driver = DatabaseDriver()
             args = [user_id]
-            driver.exec_command("""delete users where user_id=?""", args)
+            driver.exec_command("""delete from users where user_id=?""", args)
         except Exception as e:
             print(e)
             return False
