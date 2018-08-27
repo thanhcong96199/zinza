@@ -17,7 +17,8 @@ class DockerService:
             return True
         else:
             pull_image = DockerService.pull(image_name)
-            if '{}:latest'.format(image_name) is '{}:latest'.format(pull_image.tags)
+            name = pull_image.tags
+            if '{}:latest'.format(image_name) is '{}:latest'.format(name)
                 return True
             else:
                 return False
