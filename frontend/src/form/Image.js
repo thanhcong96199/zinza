@@ -21,23 +21,21 @@ function mapDispatchToProps(dispatch: Function): Object {
   }
 }
 
-class User extends Component {
+class ImageForm extends Component {
 
   state = {
-      user_id: '',
-      mail: '',
-      user_password: '',
-      user_name: '',
-      position: ''
+    image_id: '',
+    image_name: '',
+    isize: '',
+    igroup: ''
   }
 
   reset = () => {
       const state = {
-        mail: '',
-        user_password: '',
-        user_name: '',
-        position: '',
-        user_id: ''
+        image_id: '',
+        image_name: '',
+        isize: '',
+        igroup: ''
       }
       this.setState({...state})
   }
@@ -61,14 +59,14 @@ class User extends Component {
 
   onCreate = () => {
     let history = createHistory()
-    axios.post(Constants.createUserRoute, this.state)
+    axios.post(Constants.imagesCreateRoute, this.state)
     .then(
         (res) => {
           let result = res.data.result
           if (result) {
             Constants.mess.show();
             this.reset();
-            history.push('/users')
+            history.push('/images')
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
@@ -79,14 +77,14 @@ class User extends Component {
 
   onUpdate = () => {
     let history = createHistory()
-    axios.post(Constants.updateUserRoute, this.state)
+    axios.post(Constants.imagesUpdateRoute, this.state)
     .then(
         (res) => {
           let result = res.data.result
           if (result) {
             Constants.mess.show();
             this.reset();
-            history.push('/users')
+            history.push('/images')
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
@@ -97,7 +95,7 @@ class User extends Component {
 
   handleDel = () => {
     let history = createHistory()
-    axios.post(Constants.userDeleteRoute, this.state)
+    axios.post(Constants.imagesDeleteRoute, this.state)
     .then(
         (res) => {
           let result = res.data.result
@@ -117,8 +115,8 @@ class User extends Component {
 
     const { typeForm } = this.props
     if (typeForm === 'edit') {
-      const user_id = Number(this.props.match.params.id)
-      axios.post(Constants.userDetailRoute, {user_id: user_id})
+      const image_id = Number(this.props.match.params.id)
+      axios.post(Constants.userDetailRoute, {image_id: image_id})
       .then(
           (res) => {
             let user = res.data
@@ -132,7 +130,7 @@ class User extends Component {
   }
 
   render() {
-    const { mail, user_password, user_name, position, user_id  } = this.state
+    const { image_name, isize, igroup, image_id  } = this.state
     const { typeForm } = this.props
 
     return (
@@ -145,14 +143,16 @@ class User extends Component {
           <div className="col col-6">
             {
               (typeForm === 'edit' || typeForm === 'detail') &&
-              <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} value={user_id} kind="input" classList="mr-t-10" label="ID" placeholder="" name="user_id" type="email" iconName="mail"/>
+              <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} value={image_id} kind="input" classList="mr-t-10" label="ID" placeholder="" name="image_id" type="email" iconName="mail"/>
             }
-            <Input onChangeValue={this.onChangeValue} value={mail} kind="input" classList="mr-t-10" label="Email" placeholder="" name="mail" type="email" iconName="mail"/>
-            <Input onChangeValue={this.onChangeValue} value={user_password} kind="input" classList="mr-t-10" label="Password" placeholder="" name="user_password" type="text" iconName="key"/>
+            <Input onChangeValue={this.onChangeValue} value={image_name} kind="input" classList="mr-t-10" label="Name" placeholder="" name="mail" type="email" iconName="mail"/>
           </div>
           <div className="col col-6">
-            <Input onChangeValue={this.onChangeValue} value={user_name} kind="input" classList="mr-t-10" label="Name" placeholder="" name="user_name" type="text" iconName="user"/>
-            <Input onChangeValue={this.onChangeValue} value={position} kind="input" classList="mr-t-10" label="Position" placeholder="" name="position" type="text" iconName="smile-o"/>
+            {
+              (typeForm === 'edit' || typeForm === 'detail') &&
+              <Input disabled={true} onChangeValue={this.onChangeValue} value={isize} kind="input" classList="mr-t-10" label="Size" placeholder="" name="isize" type="text" iconName="key"/>
+            }
+            <Input onChangeValue={this.onChangeValue} value={igroup} kind="input" classList="mr-t-10" label="Group" placeholder="" name="igroup" type="text" iconName="user"/>
           </div>
         </div>
 
@@ -167,7 +167,7 @@ class User extends Component {
                   </span>
                 }
                 {
-                  typeForm === 'edit' &&
+                  (typeForm === 'edit' || typeForm === 'detail') &&
                   <Button className="mr-r-10" type="primary" onClick={this.handleSubmit}>Update</Button>
                 }
                 {
@@ -183,4 +183,4 @@ class User extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(ImageForm)
