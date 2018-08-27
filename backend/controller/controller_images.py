@@ -3,14 +3,24 @@ from model.connect_db import DatabaseDriver
 from model.images import Images
 import json
 from flask import request
+from dockers.service import DockerService
 
 
 
 
 # ============ get size of Image from docker
 def get_size():
+    #list_image_name = Images.get_image_name()
 
-    pass
+    size_docker = DockerService.check_size_image('busybox')
+    print(size_docker)
+
+    #Images.insert_size()
+
+
+
+
+
 
 
 
@@ -32,7 +42,7 @@ def create_image(request):
     params = request.get_json()
     image_name = params['image_name']
     igroup = params['igroup']
-    if (image_name is None) and (igroup is None):
+    if (image_name is None) or (igroup is None):
         return json.dumps({'result': False, 'mess':"Write information"})
     else:
         result = Images.create_image(image_name, igroup)
@@ -42,13 +52,15 @@ def create_image(request):
 # ================== delete images =============
 def delete_image(request):
     params = request.get_json()
-    id = params['image_id']
-    result = Images.delete_image(id)
-    return json.dumps(result)
+    image_id = params['image_id']
+    result = Images.delete_image(image_id)
+    return json.dumps({'result': True}) if result else json.dumps({'result': False})
 
 # ======== edit images===========
 def edit_image(request):
     params = request.get_json()
-    id = params['image_id']
-    result = Images.edit_image(id)
-    return json.dumps(result)
+    image_id = params['image_id']
+    image_name= params['image_name']
+    igroup = params['igroup']
+    result = Images.edit_image(image_id, image_name, igroup)
+    return json.dumps({'result': True}) if result else json.dumps({'result': False})

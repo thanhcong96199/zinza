@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from controller import users_controller
 from controller import controller_images
 
-
+from dockers.service import  DockerService
 
 app = Flask(__name__)
 app.config.from_pyfile('./config.cfg')
@@ -54,7 +54,11 @@ def edit_user():
 # =============================================== Image controller ==============
 @app.route('/images', methods=["GET", "POST"])
 def show_all_images():
+
     return controller_images.show_all_images(request)
+
+
+
 
 # ========== edit images -------
 @app.route('/images/update', methods=["GET", "POST"])
@@ -70,3 +74,8 @@ def get_image():
 @app.route('/images/create', methods=["GET", "POST"])
 def create_image():
     return controller_images.create_image(request)
+
+# ==== delete image
+@app.route('/images/delete', methods=["GET", "POST"])
+def delete_image():
+    return controller_images.delete_image(request)
