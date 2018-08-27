@@ -87,6 +87,8 @@ class Navbar extends Component {
     this.props.actRedux.actSetUser({
       loged: false
     })
+    const history = createHistory()
+    history.push('/login')
   }
 
   render() {
