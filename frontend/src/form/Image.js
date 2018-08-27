@@ -130,6 +130,7 @@ class ImageForm extends Component {
       .then(
         (res) => {
           let data = res.data
+          console.log('images data:', {res_data: res.data, res: res})
           this.setState({
             images: data
           })
@@ -151,7 +152,7 @@ class ImageForm extends Component {
           </div>
 
           <div className="col col-6">
-            <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} defaultValue="" selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
+            <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
           </div>
           <div className="col col-6">
             {

@@ -13,12 +13,12 @@ class DockerService:
         list_images_name = []
         for image in images:
             list_images_name.append(image.tags)
-        if ':latest'.format(image_name) in list_images_name:
+        if '{}:latest'.format(image_name) in list_images_name:
             return True
         else:
             pull_image = DockerService.pull(image_name)
             name = pull_image.tags
-            if '{}:latest'.format(image_name) is '{}:latest'.format(name)
+            if '{}:latest'.format(image_name) == '{}:latest'.format(name):
                 return True
             else:
                 return False
@@ -44,7 +44,19 @@ class DockerService:
         id_image = img.short_id.split(':')[1]
         temp = client.images.get(id_image)
         results = temp.attrs["Size"]
-        return round(results/(1024*1024*1024), 2)
+        return round(results/(1024*1024*1024), 3)
+
+    @staticmethod
+    def container_docker_id(image_name, cpu, memory, port, password):
+        try:
+            env = ['PASSWORD = {}'.format(password)]
+            ports = {'5900/tcp': port}
+            run_container = client.containers.run('{}:latest'.format(image_name), cpu_count = cpu, mem_limit = memory, environment = env, ports = ports, detach = True)
+            results = run_container.short_id
+        except Exception as e:
+            print(e)
+            return False
+        return results
 
 
     @staticmethod

@@ -18,7 +18,7 @@ export const imagesRoute = domain + '/images'
 export const imagesCreateRoute = domain + '/images/create'
 export const imagesDetailRoute = domain + '/images/info'
 export const imagesUpdateRoute = domain + '/images/update'
-export const imagesDeleteRoute = domain + '/images/detelte'
+export const imagesDeleteRoute = domain + '/images/delete'
 
 export const loginRoute = domain + '/login'
 export const logoutRoute = domain + '/logout'
