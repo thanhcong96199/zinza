@@ -13,6 +13,11 @@ import Image from './pages/Image';
 import ImageCreate from './pages/ImageCreate'
 import ImageDetail from './pages/ImageDetail';
 import ImageEdit from './pages/ImageEdit';
+
+import Container from './pages/Container';
+import ContainerEdit from './pages/ContainerEdit';
+import ContainerCreate from './pages/ContainerCreate';
+// import ContainerDetail from './pages/ContainerDetail';
 // redux
 import { Provider } from 'react-redux'
 import configureStore from './store/config'
@@ -45,6 +50,10 @@ class App extends Component {
                     <Route exact path="/images/create" component={ImageCreate} />
                     <Route exact path="/images/detail/:id" component={ImageDetail} />
                     <Route exact path="/images/edit/:id" component={ImageEdit} />
+
+                    <Route exact path="/containers" component={Container} />
+                    <Route exact path="/containers/create" component={ContainerCreate} />
+                    <Route exact path="/containers/edit/:id" component={ContainerEdit} />
                   </Switch>
                 </div>
               </div>
