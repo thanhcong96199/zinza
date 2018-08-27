@@ -18,7 +18,7 @@ class DockerService:
         if ':latest'.format(image_name) in list_images_name:
             return True
         else:
-            pull_image = pull(image_name)
+            pull_image = DockerService.pull(image_name)
             if '{}:latest'.format(image_name) is '{}:latest'.format(pull_image.tags)
                 return True
             else:
@@ -41,7 +41,7 @@ class DockerService:
     @staticmethod
     def check_size_image(image_name):
         """return size image"""
-        img = pull(image_name)
+        img = DockerService.pull(image_name)
         id_image = img.short_id.split(':')[1]
         temp = client.images.get(id_image)
         results = temp.attrs["Size"]
@@ -62,8 +62,8 @@ class DockerService:
     @staticmethod
     def update_container(container_docker_id, image_name, cpu, memory, port, password):
 
-        if delete_container(container_docker_id):
-            check = start_container(image_name, cpu, memory, port, password)
+        if DockerService.delete_container(container_docker_id):
+            check = DockerService.start_container(image_name, cpu, memory, port, password)
             if check:
                 return True
             else:
