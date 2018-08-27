@@ -24,7 +24,9 @@ class MyInput extends Component {
     let _isUserSelects = typeof(disabled) === 'undefined' ? false : isUserSelects
     let _isImagesSelect = typeof(disabled) === 'undefined' ? false : isImagesSelect
 
-    console.log('>>>>>>>>>>>>>>>>selects:', selects)
+    if(kind === 'select') {
+      console.log('defaultValue:', defaultValue)
+    }
 
     return (
       <div className={classList}>
@@ -73,7 +75,6 @@ class MyInput extends Component {
                 selects.map((item, key) => {
                   const val = _isImagesSelect ? item.image_name : item.user_id
                   const text = _isImagesSelect ? item.image_name : item.user_name
-                  console.log({val, text})
                   return <Option key={key} value={val}>{text}</Option>
                 })
               }
