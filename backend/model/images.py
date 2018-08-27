@@ -5,9 +5,10 @@ class Images:
 
     @staticmethod
     # get image_name
-    def get_image_name():
-        query = 'select image_name from images'
-        result = DatabaseDriver().query_db(query)
+    def get_image_name(image_id):
+        query = 'select * from images where image_id = ?'
+        args = [image_id]
+        result = DatabaseDriver().query_db(query, args, one=True)
         return result
 
 
@@ -49,5 +50,5 @@ class Images:
     @staticmethod
     # delete image
     def delete_image(image_id):
-        result = DatabaseDriver().query_db('delete from images where image_id = ?')
+        result = DatabaseDriver().query_db('delete from images where image_id = ?', image_id)
         return result

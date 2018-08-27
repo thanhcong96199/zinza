@@ -1,7 +1,5 @@
 import docker
-
 client = docker.from_env()
-
 class DockerService:
    
     @staticmethod
