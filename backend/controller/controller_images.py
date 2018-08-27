@@ -44,16 +44,24 @@ def create_image(request):
     igroup = params['igroup']
 
     if image_name == '':
-        return json.dumps({'result': False, 'mess':"Write information"})
+        return json.dumps({'result': False, 'mess':"Dien image_name"})
     else:
 
 
         result = Images.get_information_image(image_name)
-        if result >= 1:
-            return json.dumps({'result': False, 'mess': 'Da ton tai'})
+        if result is None:
+
+            print('xin chao')
+            result_ = DockerService.pull_image(image_name)
+            print(result_)
+            return json.dumps({'result': True}) if result else json.dumps(
+                {'result': False, 'mess': 'khong ton tai image'})
 
         else:
-            result = DockerService.pull_image()
+            print('hell')
+            return json.dumps({'result': False, 'mess': 'Da ton tai'})
+
+
 
 
         return json.dumps({'result': True})
