@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Select } from 'antd';
 import * as Constants from '../constants/var'
 import axios from 'axios';
+import MySearch from './../components/Search'
 
 import { connect } from 'react-redux'
 import Input from './../components/Input'
@@ -67,7 +68,11 @@ class ImageForm extends Component {
             this.reset();
             history.push('/images')
           } else {
-            Constants.mess.show('error', 'Lỗi create');
+            if (typeof(res.data.mess) !== 'undefined') {
+              Constants.mess.show('error', res.data.mess);
+            } else {
+              Constants.mess.show('error', 'Lỗi create');
+            }
           }
         },
         (error) => { Constants.mess.show('error', 'Lỗi'); }
@@ -131,8 +136,12 @@ class ImageForm extends Component {
     .then(
       (res) => {
         let data = res.data
+        let arrs = []
+        data.forEach(item => {
+          arrs.push({value: item.image_name, label: item.image_name})
+        });
         this.setState({
-          images: data
+          images: arrs
         })
       },
       (error) => { Constants.mess.show('error', 'Lỗi'); }
@@ -149,13 +158,8 @@ class ImageForm extends Component {
           <div className="col col-12 text-center mr-t-20">
             <h5>{typeForm}</h5>
           </div>
-
           <div className="col col-6">
-            {
-              typeForm === 'create' ?
-              <Input isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/> :
-              <Input disabled={true} onChangeValue={this.onChangeValue} value={image_name} kind="input" classList="mr-t-10" label="Image name" placeholder="" name="image_name" type="text" iconName="key"/>
-            }
+            <MySearch onChangeValue={this.onChangeValue} label="Name" selects={images} selectedOption={image_name} name="image_name"/>
           </div>
           <div className="col col-6">
             {

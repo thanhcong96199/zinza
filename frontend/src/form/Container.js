@@ -47,7 +47,7 @@ class ContainerForm extends Component {
         user_id: '',
         users: []
       }
-      this.setState({...state})
+      this.setState({ ...state })
   }
 
   onChangeValue = (name, value) => {
@@ -191,7 +191,7 @@ class ContainerForm extends Component {
             <Input isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
 
             <Input isUsersSelect={true} onChangeValue={this.onChangeValue} defaultValue={user_id} selects={users} kind="select" classList="mr-t-10" label="User" placeholder="" name="user_id"/>
-          </div>
+          </div>                                                                                                                                                                                                                                                                                              
         </div>
 
         <div className="row">
