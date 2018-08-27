@@ -4,9 +4,11 @@ from model.connect_db import DatabaseDriver
 class Images:
 
     @staticmethod
-    # get size from docker and inser database
-    def get_size_image():
-        pass
+    # get image_name
+    def get_image_name():
+        query = 'select image_name from images'
+        result = DatabaseDriver().query_db(query)
+        return result
 
 
     @staticmethod
@@ -28,18 +30,24 @@ class Images:
 
     @staticmethod
     # create image
-    def create_image(name, group, size):
+    def create_image(name, group):
 
 
-        query = 'insert into images(image_name, isize, igroup) values (?, ?, ?)'
-        args = [name, size, group]
+        query = 'insert into images(image_name, igroup) values (?, ?)'
+        args = [name, group]
         result = result = DatabaseDriver().query_db(query, args, one=True)
         return  result
 
     @staticmethod
     # edit image
-    def edit_image(image_id, image_name, isize, igroup):
-        query = 'update images set image_name = ?, isize = ?, igroup = ? where image_id = ?'
+    def edit_image(image_id, image_name, igroup):
+        query = 'update images set image_name = ?,  igroup = ? where image_id = ?'
 
-        args = [image_name, isize, igroup, image_id]
+        args = [image_name,  igroup, image_id]
         result = DatabaseDriver().query_db(query, args, one=True)
+
+    @staticmethod
+    # delete image
+    def delete_image(image_id):
+        result = DatabaseDriver().query_db('delete from images where image_id = ?')
+        return result

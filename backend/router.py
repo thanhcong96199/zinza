@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from controller import users_controller
-#from controller import  images_controller
+from controller import controller_images
 
 
 
@@ -46,9 +46,27 @@ def delete_user():
     return users_controller.delete_user(request)
 
 
-@app.route('/users/edit', methods=["GET", "POST"])
+@app.route('/users/update', methods=["GET", "POST"])
 def edit_user():
     return users_controller.edit_user(request)
 
 
 # =============================================== Image controller ==============
+@app.route('/images', methods=["GET", "POST"])
+def show_all_images():
+    return controller_images.show_all_images(request)
+
+# ========== edit images -------
+@app.route('/images/update', methods=["GET", "POST"])
+def edit_image():
+    return controller_images.edit_image(request)
+
+# ======== get information one image =============
+@app.route('/images/info', methods=["GET", "POST"])
+def get_image():
+    return controller_images.get_image(request)
+
+# ==== create image
+@app.route('/images/create', methods=["GET", "POST"])
+def create_image():
+    return controller_images.create_image(request)
