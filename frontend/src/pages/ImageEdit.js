@@ -21,7 +21,7 @@ class ImageEdit extends Component {
     const { userRedux } = this.props
     // if (!userRedux.loged) {
     //   return <Redirect to="/login"/>
-    // }
+    // } 
 
     return (
       <div>
