@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, Select } from 'antd';
 import * as Constants from '../constants/var'
 import axios from 'axios';
 
@@ -25,7 +25,8 @@ class ImageForm extends Component {
     image_id: '',
     image_name: '',
     isize: '',
-    igroup: ''
+    igroup: '',
+    images: []
   }
 
   reset = () => {
@@ -110,9 +111,10 @@ class ImageForm extends Component {
 
   componentDidMount() {
     const { typeForm } = this.props
-    if (typeForm === 'edit') {
+    if (typeForm === 'edit' || typeForm === 'detail') {
+      // get current image info
       const image_id = Number(this.props.match.params.id)
-      axios.post(Constants.userDetailRoute, {image_id: image_id})
+      axios.post(Constants.imagesDetailRoute, {image_id: image_id})
       .then(
           (res) => {
             let user = res.data
@@ -122,11 +124,23 @@ class ImageForm extends Component {
           },
           (error) => { Constants.mess.show('error', 'Lỗi'); }
       );
+
+      // get list images
+      axios.post(Constants.imagesRoute, {})
+      .then(
+        (res) => {
+          let data = res.data
+          this.setState({
+            images: data
+          })
+        },
+        (error) => { Constants.mess.show('error', 'Lỗi'); }
+      );
     }
   }
 
   render() {
-    const { image_name, isize, igroup, image_id  } = this.state
+    const { image_name, isize, igroup, image_id, images } = this.state
     const { typeForm } = this.props
 
     return (
@@ -137,11 +151,7 @@ class ImageForm extends Component {
           </div>
 
           <div className="col col-6">
-            {
-              (typeForm === 'edit' || typeForm === 'detail') &&
-              <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} value={image_id} kind="input" classList="mr-t-10" label="ID" placeholder="" name="image_id" type="email" iconName="mail"/>
-            }
-            <Input onChangeValue={this.onChangeValue} value={image_name} kind="input" classList="mr-t-10" label="Name" placeholder="" name="mail" type="email" iconName="mail"/>
+            <Input disabled={typeForm !== 'create'} onChangeValue={this.onChangeValue} defaultValue="" selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/>
           </div>
           <div className="col col-6">
             {
