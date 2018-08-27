@@ -152,7 +152,6 @@ class ImageForm extends Component {
     const { image_name, isize, igroup, image_id, images } = this.state
     const { typeForm } = this.props
 
-    console.log('===========image:', images)
 
     return (
       <div>
@@ -161,7 +160,11 @@ class ImageForm extends Component {
             <h5>{typeForm}</h5>
           </div>
           <div className="col col-6">
-            <MySearch onChangeValue={this.onChangeValue} label="Name" selects={images} selectedOption={image_name} name="image_name"/>
+            {
+              typeForm === 'create' ?
+              <Input isImagesSelect={true} onChangeValue={this.onChangeValue} defaultValue={image_name} selects={images} kind="select" classList="mr-t-10" label="Image name" placeholder="" name="image_name"/> :
+              <Input disabled={true} onChangeValue={this.onChangeValue} value={image_name} kind="input" classList="mr-t-10" label="Image name" placeholder="" name="image_name" type="text" iconName="key"/>
+            }
           </div>
           <div className="col col-6">
             {
