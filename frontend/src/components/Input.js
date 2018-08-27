@@ -21,8 +21,8 @@ class MyInput extends Component {
     const { TextArea } = Input
     const Option = Select.Option
     let _disabled = typeof(disabled) === 'undefined' ? false : disabled
-    let _isUserSelects = typeof(disabled) === 'undefined' ? false : isUserSelects
-    let _isImagesSelect = typeof(disabled) === 'undefined' ? false : isImagesSelect
+    let _isUserSelects = typeof(isUserSelects) === 'undefined' ? false : isUserSelects
+    let _isImagesSelect = typeof(isImagesSelect) === 'undefined' ? false : isImagesSelect
 
     console.log('_______________-selects:(input)', selects)
 
