@@ -15,7 +15,7 @@ class DockerService:
         list_images_name = []
         for image in images:
             list_images_name.append(image.tags)
-        if ':latest'.format(image_name) in list_images_name:
+        if '{}:latest'.format(image_name) in list_images_name:
             return True
         else:
             pull_image = DockerService.pull(image_name)
