@@ -110,5 +110,6 @@ class Images:
         driver = DatabaseDriver()
         args = [image_name]
         result = driver.exec_command(""" select count(*) from images where image_name= ? """, args)
+        print(result)
         return  result
 
