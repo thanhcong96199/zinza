@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Select } from 'antd';
+import { Button, Select, Spin } from 'antd';
 import * as Constants from '../constants/var'
 import axios from 'axios';
 
@@ -26,7 +26,8 @@ class ImageForm extends Component {
     image_name: '',
     isize: '',
     igroup: '',
-    images: []
+    images: [],
+    waitting: false
   }
 
   reset = () => {
@@ -48,6 +49,7 @@ class ImageForm extends Component {
   }
 
   handleSubmit = () => {
+    this.setState({waitting: true})
     const { typeForm } = this.props
     if (typeForm === 'create') {
       this.onCreate()
@@ -73,8 +75,9 @@ class ImageForm extends Component {
               Constants.mess.show('error', 'Lỗi create');
             }
           }
+          this.setState({waitting: false})
         },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
@@ -91,12 +94,14 @@ class ImageForm extends Component {
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
+          this.setState({waitting: false})
         },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}) }
     );
   }
 
   handleDel = () => {
+    this.setState({waitting: true})
     let history = createHistory()
     axios.post(Constants.imagesDeleteRoute, this.state)
     .then(
@@ -108,8 +113,9 @@ class ImageForm extends Component {
           } else {
             Constants.mess.show('error', 'Xóa thất bại');
           }
+          this.setState({waitting: false})
          },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
@@ -144,11 +150,15 @@ class ImageForm extends Component {
   }
 
   render() {
-    const { image_name, isize, igroup, image_id, images } = this.state
+    const { waitting, image_name, isize, igroup, image_id, images } = this.state
     const { typeForm } = this.props
 
     return (
       <div>
+        {
+          waitting &&
+          <Spin tip="Waitting..." className="t-spin"/>
+        }
         <div className="row">
           <div className="col col-12 text-center mr-t-20">
             <h5>{typeForm}</h5>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Select } from 'antd';
+import { Button, Select, Spin } from 'antd';
 import * as Constants from '../constants/var'
 import axios from 'axios';
 
@@ -31,7 +31,8 @@ class ContainerForm extends Component {
     image_name: '',
     images: [],
     user_id: '',
-    users: []
+    users: [],
+    waitting: false
   }
 
   reset = () => {
@@ -59,6 +60,7 @@ class ContainerForm extends Component {
   }
 
   handleSubmit = () => {
+    this.setState({waitting: true})
     const { typeForm } = this.props
     if (typeForm === 'create') {
       this.onCreate()
@@ -80,8 +82,9 @@ class ContainerForm extends Component {
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
+          this.setState({waitting: false})
         },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
@@ -98,12 +101,14 @@ class ContainerForm extends Component {
           } else {
             Constants.mess.show('error', 'Lỗi update');
           }
+          this.setState({waitting: false})
         },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
   handleDel = () => {
+    this.setState({waitting: true})
     let history = createHistory()
     axios.post(Constants.containersDeleteRoute, this.state)
     .then(
@@ -115,8 +120,9 @@ class ContainerForm extends Component {
           } else {
             Constants.mess.show('error', 'Xóa thất bại');
           }
+          this.setState({waitting: false})
          },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
@@ -163,11 +169,15 @@ class ContainerForm extends Component {
   }
 
   render() {
-    const { container_id, container_docker_id, cpu, memory, port, container_password, image_name, images, user_id, users } = this.state
+    const { waitting, container_id, container_docker_id, cpu, memory, port, container_password, image_name, images, user_id, users } = this.state
     const { typeForm } = this.props
 
     return (
       <div>
+        {
+          waitting &&
+          <Spin tip="Waitting..." className="t-spin"/>
+        }
         <div className="row">
           <div className="col col-12 text-center mr-t-20">
             <h5>{typeForm}</h5>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import axios from 'axios';
 import * as Constants from './../constants/var'
 import Input from './../components/Input'
@@ -27,7 +27,8 @@ function mapDispatchToProps(dispatch: Function): Object {
 class LoginForm extends Component {
     state = {
         mail: '',
-        user_password: ''
+        user_password: '',
+        waitting: false
     }
 
     reset = () => {
@@ -39,17 +40,18 @@ class LoginForm extends Component {
     }
 
     handleSubmit = (values) => {
+        this.setState({waitting: true})
         axios.post(Constants.loginRoute, this.state)
         .then(
             (res) => { this.loginSuccess(res); },
-            (error) => { Constants.mess.show('error', 'Lỗi'); }
+            (error) => { Constants.mess.show('error', 'Lỗi'); this.setState({waitting: false}); }
         );
     }
 
     loginSuccess = (res) => {
+        this.setState({waitting: false})
         let history = createHistory()
         let data = res.data
-        console.log('====data:', data)
         if (data.result) {
             let user = {
                 loged: true,
@@ -75,7 +77,7 @@ class LoginForm extends Component {
 
 
   render() {
-    let { mail, user_password } = this.state
+    let { waitting, mail, user_password } = this.state
 
     const { userRedux } = this.props
     if (userRedux.loged) {
@@ -84,6 +86,10 @@ class LoginForm extends Component {
 
     return (
       <div className="login-form">
+        {
+            waitting &&
+            <Spin tip="Waitting..." className="t-spin"/>
+        }
         <p className="text-center">Let's get started. Please Login.</p>
 
         <Input onChangeValue={this.onChangeValue} value={mail} kind="input" classList="mr-t-10" label="Email" placeholder="" name="mail" type="email" iconName="mail"/>

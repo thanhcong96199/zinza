@@ -26,7 +26,8 @@ class User extends Component {
       mail: '',
       user_password: '',
       user_name: '',
-      position: ''
+      position: '',
+      waitting: false
   }
 
   reset = () => {
@@ -49,6 +50,7 @@ class User extends Component {
   }
 
   handleSubmit = () => {
+    this.setState({waitting: true});
     const { typeForm } = this.props
     if (typeForm === 'create') {
       this.onCreate()
@@ -70,8 +72,9 @@ class User extends Component {
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
+          this.setState({waitting: false});
         },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
@@ -88,12 +91,14 @@ class User extends Component {
           } else {
             Constants.mess.show('error', 'Lỗi create');
           }
+          this.setState({waitting: false});
         },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
   handleDel = () => {
+    this.setState({waitting: true});
     let history = createHistory()
     axios.post(Constants.userDeleteRoute, this.state)
     .then(
@@ -105,8 +110,9 @@ class User extends Component {
           } else {
             Constants.mess.show('error', 'Xóa thất bại');
           }
+          this.setState({waitting: false});
          },
-        (error) => { Constants.mess.show('error', 'Lỗi'); }
+        (error) => { Constants.mess.show('error', 'Lỗi');this.setState({waitting: false}); }
     );
   }
 
