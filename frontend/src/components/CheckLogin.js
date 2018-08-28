@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userAction from './../actions/user'
 import { Redirect } from 'react-router-dom'
-const history = createHistory()
 
 function mapStateToProps(state: Object): Object {
   return {
@@ -20,8 +19,6 @@ function mapDispatchToProps(dispatch: Function): Object {
 class CheckLogin extends Component {
   constructor(props) {
     super(props)
-
-    this.state = { currentPath: history.location.pathname }
 
     let userLocalS = localStorage.getItem('user')
     if (userLocalS) {
@@ -46,7 +43,9 @@ class CheckLogin extends Component {
 
   render() {
     let userLocalS = localStorage.getItem('user')
-    let { currentPath } = this.state
+    const history = createHistory()
+    let currentPath = history.location.pathname
+
     return (
       <div>
         {

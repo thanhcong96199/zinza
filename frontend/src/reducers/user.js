@@ -18,7 +18,8 @@ const userRedux = handleActions({
   },
   [ActionTypes.SET_USER_INFO]: (state: any, action: any): any => {
     let newState = state
-    newState.user = { ...newState.user, ...action.payload }
+    newState.user = { ...action.payload }
+    console.log('newState:', newState)
     return newState
   }
 }, initialState)
