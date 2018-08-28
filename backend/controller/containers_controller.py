@@ -14,11 +14,11 @@ def create_container(request):
 
 	if (cpu is not None) and (memory is not None) and (port is not None) and (container_password is not None) and (image is not None) and (user_id is not None):
 		image_id = Images.get_image_id(image)['image_id']
-		print(image_id)
 		result = Containers.create_container(image_id, cpu, memory, port, container_password, user_id)
+
 		started = DockerService.start_container(image, cpu, memory, port, container_password)
-		print(started)
-		return json.dumps(result)
+
+		return json.dumps({'result': result})
 
 
 	else:
