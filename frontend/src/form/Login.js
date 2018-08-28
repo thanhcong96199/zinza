@@ -58,7 +58,8 @@ class LoginForm extends Component {
             localStorage.setItem('user', JSON.stringify(user))
             this.props.actRedux.actSetUser(user)
             Constants.mess.show()
-            history.push('/')
+            history.push('/users')
+            console.log('this.props (login)', this.props)
         } else {
             Constants.mess.show('error', 'Tài khoản hoặc mật khẩu không chính xác')
         }
