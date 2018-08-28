@@ -41,6 +41,7 @@ class CheckLogin extends Component {
     let userLocalS = localStorage.getItem('user')
     let userObj = JSON.parse(userLocalS)
     this.props.actRedux.actSetUser(userObj)
+    console.log("userLocalS:", {userLocalS, userObj})
   }
 
   render() {

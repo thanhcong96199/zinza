@@ -93,10 +93,10 @@ class Navbar extends Component {
 
   render() {
     const { userRedux } = this.props
-    console.log('====redux:', userRedux)
-    if (userRedux.loged === false) {
-      return <div></div>
-    }
+    // console.log('====redux:', userRedux)
+    // if (userRedux.loged === false) {
+    //   return <div></div>
+    // }
 
     return (
       <div className="text-center">
