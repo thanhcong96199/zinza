@@ -22,7 +22,7 @@ class Containers:
 # ========= delete ===========
     @staticmethod
     def del_container(container_id):
-        try:git 
+        try:
             driver = DatabaseDriver()
             args = [container_id]
             driver.exec_command("""delete from containers where container_id=?""", args)
@@ -61,3 +61,26 @@ class Containers:
         except Exception as e:
             print(e)
             return False
+
+    @staticmethod
+    def insert_container_docker_id(result, container_docker_id):
+        try:
+            query = 'insert into containers(container_docker_id) values(?) where result=? '
+            args = [container_docker_id, result]
+
+            result = DatabaseDriver().query_db(query, args)
+            return result
+        except:
+            return False
+
+    @staticmethod
+    def get_container_docker_id(container_id):
+        try:
+            query = 'select container_docker_id from containers where container_id = ?'
+            args = [container_id]
+            result = DatabaseDriver().query_db(query, args)
+            return result
+        except:
+            return False
+
+

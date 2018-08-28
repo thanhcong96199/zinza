@@ -43,6 +43,8 @@ class DockerService:
             print(e)
             return False
 
+
+
     @staticmethod
     def check_size_image(image_name):
         """return size image"""

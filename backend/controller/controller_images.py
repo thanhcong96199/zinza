@@ -6,24 +6,15 @@ from flask import request
 from dockers.service import DockerService
 
 
-
-
 # ============ get size of Image from docker
 def get_size():
-    #list_image_name = Images.get_image_name()
+    list_image_name = Images.get_image_name()
+    for i in list_image_name:
 
-    size_docker = DockerService.check_size_image('busybox')
-    print(size_docker)
-
-    #Images.insert_size()
-
-
-
-
-
-
-
-
+        size_docker = DockerService.check_size_image(i['image_name'])
+        result = Images.insert_size(size_docker)
+    
+     return json.dumps({'result': True}) if result else json.dumps({'result': False})
 
 # ===================show all information of images
 def show_all_images(request):
