@@ -4,7 +4,7 @@ import * as ActionTypes from '../actions/action_types'
 
 export const initialState = {
   user: {
-    loged: true,
+    loged: false,
     user_id: 0,
     user_name: 'Trung Hồ Ngọc',
     user_password: '',
