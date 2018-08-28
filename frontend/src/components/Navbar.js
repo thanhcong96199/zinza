@@ -94,7 +94,7 @@ class Navbar extends Component {
   render() {
     const { userRedux } = this.props
     console.log('====redux:', userRedux)
-    if (!userRedux.loged) {
+    if (userRedux.loged) {
       return <div></div>
     }
 
