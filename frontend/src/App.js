@@ -4,7 +4,7 @@ import './App.css';
 import Login from './pages/Login'
 import User from './pages/User';
 import Navbar from './components/Navbar';
-// import CheckLogin from './components/CheckLogin';
+import CheckLogin from './components/CheckLogin';
 import UserCreate from './pages/UserCreate'
 import UserEdit from './pages/UserEdit';
 import UserDetail from './pages/UserEdit';
@@ -59,6 +59,7 @@ class App extends Component {
               </div>
             </div>
 
+            <CheckLogin/>
           </div>
         </Router>
       </Provider>

@@ -3,7 +3,6 @@ import createHistory from 'history/createHashHistory';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userAction from './../actions/user'
-import { Redirect } from 'react-router-dom'
 
 function mapStateToProps(state: Object): Object {
   return {
@@ -47,12 +46,7 @@ class CheckLogin extends Component {
     let currentPath = history.location.pathname
 
     return (
-      <div>
-        {
-          userLocalS &&
-          <Redirect to={currentPath}/>
-        }
-      </div>
+      <div></div>
     );
   }
 }
