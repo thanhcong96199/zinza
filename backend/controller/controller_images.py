@@ -46,33 +46,18 @@ def create_image(request):
     if image_name == '':
         return json.dumps({'result': False, 'mess':"Dien image_name"})
     else:
-
-
         result = Images.get_information_image(image_name)
-        if result is None:
-
-            print('xin chao')
-            result_ = DockerService.pull_image(image_name)
-            print(result_)
-            return json.dumps({'result': True}) if result else json.dumps(
-                {'result': False, 'mess': 'khong ton tai image'})
+        #return json.dumps({'result':result})
+        if len(result) == 0:
+            result_pull = DockerService.pull_image(image_name)
+            if result_pull :
+                Images.create_image(image_name, igroup)
+                return json.dumps({'result': True})
+            else:
+                return json.dumps({'result': False, 'mess': 'khong ton tai image'})
 
         else:
-            print('hell')
             return json.dumps({'result': False, 'mess': 'Da ton tai'})
-
-
-
-
-        return json.dumps({'result': True})
-        if result == 0:
-            result = Images.create_image(image_name, igroup)
-            return json.dumps({'result': True})
-        else:
-            return json.dumps({'result': False})
-
-
-
 
 
 # ================== delete images =============

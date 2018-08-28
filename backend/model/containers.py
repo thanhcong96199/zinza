@@ -55,12 +55,12 @@ class Containers:
 
     # ======== create container =========
     @staticmethod
-    def create_container(image, cpu, memory, port, container_password, user_id):
+    def create_container(image_id, cpu, memory, port, container_password, user_id):
         try:
             driver = DatabaseDriver()
-            args = [image, cpu, memory, port, container_password, user_id]
-            new_id = driver.exec_command("""insert into users( image, cpu, memory, port, container_password)
-                                             values (?, ?, ?, ?, ?)""", args)
+            args = [image_id, cpu, memory, port, container_password, user_id]
+            new_id = driver.exec_command("""insert into containers( image_id, cpu, memory, port, container_password,user_id)
+                                             values (?, ?, ?, ?, ?,?)""", args)
             return new_id
         except Exception as e:
             print(e)

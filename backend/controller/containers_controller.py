@@ -1,5 +1,6 @@
-#from dockers.service import  DockerService
+from dockers.service import  DockerService
 from model.containers import Containers
+from model.images import Images
 import json
 # ========= create container =============
 def create_container(request):
@@ -11,8 +12,12 @@ def create_container(request):
 	port = params['port']
 	container_password = params['container_password']
 
-	if (cpu is not None) and (memory is not None) and (port is not None) and (container_password is not None) and (image is not None) and ():
-		result = Containers.create_container(image, cpu, memory, port, container_password, user_id)
+	if (cpu is not None) and (memory is not None) and (port is not None) and (container_password is not None) and (image is not None) and (user_id is not None):
+		image_id = Images.get_image_id(image)['image_id']
+		print(image_id)
+		result = Containers.create_container(image_id, cpu, memory, port, container_password, user_id)
+		started = DockerService.start_container(image, cpu, memory, port, container_password)
+		print(started)
 		return json.dumps(result)
 
 

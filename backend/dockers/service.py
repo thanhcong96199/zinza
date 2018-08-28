@@ -8,33 +8,39 @@ class DockerService:
         return client.images.pull('{}:latest'.format(image_name))
     @staticmethod
     def pull_image(image_name):
-        """pull image by name and check image """
-        images = client.images.list()
-        list_images_name = []
-        for image in images:
-            list_images_name.append(image.tags)
-        if '{}:latest'.format(image_name) in list_images_name:
-            return True
-        else:
-            pull_image = DockerService.pull(image_name)
-            name = pull_image.tags
-            if '{}:latest'.format(image_name) == '{}:latest'.format(name):
+        try:
+            """pull image by name and check image """
+            images = client.images.list()
+            list_images_name = []
+            for image in images:
+                list_images_name.append(image.tags)
+            if '{}:latest'.format(image_name) in list_images_name:
                 return True
             else:
-                return False
+                pull_image = DockerService.pull(image_name)
+                name = pull_image.tags
+                if '{}:latest'.format(image_name) == name[0]:
+                    return True
+                else:
+                    return False
+        except:
+            return False
 
     @staticmethod
     def start_container(image_name, cpu, memory, port, password):
         try:
-            env = ['PASSWORD = {}'.format(password)]
+            env = ['VNC_PASSWORD = {}'.format(password)]
             ports = {'5900/tcp': port}
-            run_container = client.containers.run('{}:latest'.format(image_name), cpu_count = cpu, mem_limit = memory, environment = env, ports = ports, detach = True)
+            print('before running contaner')
+            run_container = client.containers.run('{}:latest'.format(image_name), cpu_count = int(cpu), mem_limit = memory, environment = env, ports = ports, detach = True)
+            print('running contaner')
             if run_container.status == 'created':
                 return True
 
             else:
                 return False
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     @staticmethod

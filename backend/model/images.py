@@ -45,6 +45,20 @@ class Images:
             return False
         return result
 
+    @staticmethod
+    # get one information image id
+    def get_image_id(image_name):
+
+        try:
+            query = """select image_id from images where image_name = ?"""
+            args = [image_name]
+            result = DatabaseDriver().query_db(query, args, one=True)
+        except Exception as e:
+            print(e)
+            return False
+        return result
+
+
 
 
 
@@ -109,7 +123,7 @@ class Images:
 
         driver = DatabaseDriver()
         args = [image_name]
-        result = driver.exec_command(""" select count(*) from images where image_name= ? """, args)
-        print(result)
+        result = driver.query_db(""" select * from images where image_name= ? """, args)
+        print("get_information_image {}".format(result))
         return  result
 
